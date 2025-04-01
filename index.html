@@ -9,8 +9,8 @@
 </head>
 <body>
     <header>
-        <h1>Presidential Executive Orders - 2025</h1>
-        <p>Tracking EOs by Risk and Scale</p>
+        <h1>47th President’s Executive Orders</h1>
+        <p>Tracking EOs by Risk and Impact</p>
     </header>
     
     <section id="staffer-table">
@@ -29,7 +29,7 @@
                 <option value="yellow">Yellow (5-7)</option>
                 <option value="green">Green (1-4)</option>
             </select>
-            <label>Scale: </label>
+            <label>Impact Level: </label>
             <select id="impact-filter">
                 <option value="">All</option>
                 <option value="High">High</option>
@@ -60,8 +60,9 @@
                     <th>Bill Status</th>
                     <th>Court Challenges</th>
                     <th onclick="sortTable(5)">Risk Level <span class="sort-arrow">▲<br>▼</span></th>
-                    <th onclick="sortTable(6)">Scale <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(6)">Impact Level <span class="sort-arrow">▲<br>▼</span></th>
                     <th onclick="sortTable(7)">Last Updated <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(8)">Date Signed <span class="sort-arrow">▲<br>▼</span></th>
                 </tr>
             </thead>
             <tbody id="eo-body"></tbody>
@@ -72,8 +73,8 @@
         <h3>Data Sources & Definitions</h3>
         <p><strong>Bill Status:</strong> Congress.gov (sponsored bills), X.com (intent).</p>
         <p><strong>Court Challenges:</strong> X.com (lawsuits, rulings).</p>
-        <p><strong>Risk Level (1-10):</strong> Legislative Risk (0-4: Codified, Sponsored, Optional, Intent, No bill), Judicial Risk (0-3: None, Threatened, Filed, Ruling), Scale Weight (0-3: Low=0, Medium=1, High=2-3). Red: 8-10.</p>
-        <p><strong>Scale (H/M/L):</strong> Population (>1M=High, 100K-1M=Medium, <100K=Low), Economic (>$10B=High, $1B-$10B=Medium, <$1B=Low), Longevity (>10 yrs=High, 2-10 yrs=Medium, <2 yrs=Low).</p>
+        <p><strong>Risk Level (1-10):</strong> Legislative Risk (0-4: Codified, Sponsored, Optional, Intent, No bill), Judicial Risk (0-3: None, Threatened, Filed, Ruling), Impact Weight (0-3: Low=0, Medium=1, High=2-3). Red: 8-10.</p>
+        <p><strong>Impact Level (H/M/L):</strong> Population (>1M=High, 100K-1M=Medium, <100K=Low), Economic (>$10B=High, $1B-$10B=Medium, <$1B=Low), Longevity (>10 yrs=High, 2-10 yrs=Medium, <2 yrs=Low).</p>
         <p><em>This site reflects our analysis based on public data. It is not legal or policy advice. Verify details independently and form your own conclusions.</em></p>
         <p><strong>Corrections or Suggestions?</strong> Email <a href="mailto:EOTracker@proton.me">EOTracker@proton.me</a>.</p>
     </footer>

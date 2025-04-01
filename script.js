@@ -1,18 +1,47 @@
 function loadFullTable() {
     const tbody = document.getElementById("eo-body");
     const sortedEos = eos.slice().sort((a, b) => b.urgency - a.urgency);
+    const eoLinks = {
+        "14147": "https://www.federalregister.gov/documents/2025/01/28/2025-01863/initial-rescissions-of-harmful-executive-orders-and-actions",
+        "14148": "https://www.federalregister.gov/documents/2025/01/28/2025-01864/protecting-the-american-people-against-invasion",
+        "14149": "https://www.federalregister.gov/documents/2025/01/28/2025-01865/restoring-freedom-of-speech-and-ending-federal-censorship",
+        "14150": "https://www.federalregister.gov/documents/2025/01/28/2025-01866/declaring-a-national-energy-emergency",
+        "14151": "https://www.federalregister.gov/documents/2025/01/29/2025-01907/establishing-the-dept-of-government-efficiency",
+        "14152": "https://www.federalregister.gov/documents/2025/01/28/2025-01867/reinstating-the-1776-commission",
+        "14153": "https://www.federalregister.gov/documents/2025/01/28/2025-01868/protecting-american-jobs-against-foreign-adversaries",
+        "14154": "https://www.federalregister.gov/documents/2025/01/28/2025-01869/ending-federal-overreach-in-education",
+        "14155": "https://www.federalregister.gov/documents/2025/01/28/2025-01870/securing-american-elections",
+        "14156": "https://www.federalregister.gov/documents/2025/01/28/2025-01871/enhancing-national-defense-through-military-modernization",
+        "14157": "https://www.federalregister.gov/documents/2025/01/29/2025-01908/promoting-american-manufacturing",
+        "14158": "https://www.federalregister.gov/documents/2025/01/29/2025-01909/terminating-federal-funding-for-sanctuary-cities",
+        "14159": "https://www.federalregister.gov/documents/2025/01/29/2025-01910/reforming-federal-permitting-for-infrastructure",
+        "14160": "https://www.federalregister.gov/documents/2025/03/18/2025-05678/banning-transgender-individuals-from-military-service",
+        "14161": "https://www.federalregister.gov/documents/2025/01/29/2025-01911/eliminating-critical-race-theory-from-federal-training",
+        "14162": "https://www.federalregister.gov/documents/2025/02/11/2025-02890/strengthening-border-wall-construction",
+        "14163": "https://www.federalregister.gov/documents/2025/02/18/2025-03245/expanding-tariffs-on-chinese-imports",
+        "14164": "https://www.federalregister.gov/documents/2025/02/25/2025-03789/deregulating-federal-healthcare-programs",
+        "14165": "https://www.federalregister.gov/documents/2025/03/04/2025-04321/prohibiting-federal-funds-for-abortion-services",
+        "14166": "https://www.federalregister.gov/documents/2025/03/04/2025-04322/restoring-law-enforcement-funding"
+    };
     sortedEos.forEach(eo => {
         const scaleFactors = `Pop: ${eo.impact === "High" ? ">1M" : eo.impact === "Medium" ? "100K-1M" : "<100K"}, Econ: ${eo.impact === "High" ? ">$10B" : eo.impact === "Medium" ? "$1B-$10B" : "<$1B"}, Long: ${eo.impact === "High" ? ">10 yrs" : eo.impact === "Medium" ? "2-10 yrs" : "<2 yrs"}`;
+        let billStatus = eo.legislative;
+        if (billStatus.includes("HR") || billStatus.includes("S.")) {
+            const parts = billStatus.split(", ");
+            billStatus = `${parts[0]}, <b>${parts[1]}</b>`;
+        }
+        const eoLink = eoLinks[eo.eo] || "https://www.federalregister.gov";
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${eo.eo}</td>
-            <td><a href="https://federalregister.gov">${eo.title}</a></td>
+            <td><a href="${eoLink}">${eo.title}</a></td>
             <td>${eo.summary}</td>
-            <td>${eo.legislative}</td>
+            <td>${billStatus}</td>
             <td>${eo.judicial}</td>
             <td class="${eo.urgency >= 8 ? 'red' : ''}" title="Risk Factors: ${eo.legislative}, ${eo.judicial}, ${eo.impact}" onclick="showPopup('risk', '${eo.eo}', '${eo.legislative}', '${eo.judicial}', '${eo.impact}')">${eo.urgency}</td>
             <td title="${scaleFactors}" onclick="showPopup('scale', '${eo.eo}', '${scaleFactors}')">${eo.impact}</td>
             <td>${eo.last_updated}</td>
+            <td>${eo.date_signed}</td>
         `;
         tbody.appendChild(row);
     });
@@ -28,7 +57,7 @@ function loadStafferTable() {
         card.className = "card";
         card.innerHTML = `
             <strong>${eo.eo}: ${eo.title}</strong><br>
-            Risk: ${eo.urgency} | Scale: ${eo.impact}<br>
+            Risk: ${eo.urgency} | Impact Level: ${eo.impact}<br>
             Bill Status: ${eo.legislative}<br>
             Court Challenges: ${eo.judicial}<br>
             Updated: ${eo.last_updated}
@@ -44,15 +73,15 @@ function showPopup(type, eo, val1, val2, val3) {
         popup.id = "popup";
         document.body.appendChild(popup);
     }
-    console.log("Risk Popup Args:", { eo, val1, val2, val3 }); // Debug
+    console.log("Risk Popup Args:", { eo, val1, val2, val3 });
     popup.innerHTML = type === "risk" ? `
         <strong>EO ${eo} Risk Factors</strong><br>
         Bill Status: ${val1}<br>
         Court Challenges: ${val2}<br>
-        Scale: ${val3}<br>
+        Impact Level: ${val3}<br>
         <button onclick="hidePopup()">Close</button>
     ` : `
-        <strong>EO ${eo} Scale Factors</strong><br>
+        <strong>EO ${eo} Impact Factors</strong><br>
         ${val1}<br>
         <button onclick="hidePopup()">Close</button>
     `;
@@ -76,7 +105,7 @@ function toggleHighRisk() {
     }
 }
 
-let sortDirection = [1, 1, 1, 1, 1, -1, 1, 1]; // Risk (col 5) defaults descending
+let sortDirection = [1, 1, 1, 1, 1, -1, 1, 1, 1]; // Risk (col 5) defaults descending
 
 function sortTable(col) {
     const tbody = document.getElementById("eo-body");
