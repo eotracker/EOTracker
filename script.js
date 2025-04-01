@@ -10,7 +10,7 @@ function loadFullTable() {
             <td>${eo.summary}</td>
             <td>${eo.legislative}</td>
             <td>${eo.judicial}</td>
-            <td class="${eo.urgency >= 8 ? 'red' : ''}" title="Risk Factors: ${eo.judicial}, ${eo.legislative}" onclick="showPopup('risk', '${eo.eo}', '${eo.judicial}', '${eo.legislative}')">${eo.urgency}</td>
+            <td class="${eo.urgency >= 8 ? 'red' : ''}" title="Risk Factors: ${eo.legislative}, ${eo.judicial}, ${eo.impact}" onclick="showPopup('risk', '${eo.eo}', '${eo.legislative}', '${eo.judicial}', '${eo.impact}')">${eo.urgency}</td>
             <td title="${scaleFactors}" onclick="showPopup('scale', '${eo.eo}', '${scaleFactors}')">${eo.impact}</td>
             <td>${eo.last_updated}</td>
         `;
@@ -37,17 +37,19 @@ function loadStafferTable() {
     });
 }
 
-function showPopup(type, eo, val1, val2) {
+function showPopup(type, eo, val1, val2, val3) {
     let popup = document.getElementById("popup");
     if (!popup) {
         popup = document.createElement("div");
         popup.id = "popup";
         document.body.appendChild(popup);
     }
+    console.log("Risk Popup Args:", { eo, val1, val2, val3 }); // Debug
     popup.innerHTML = type === "risk" ? `
         <strong>EO ${eo} Risk Factors</strong><br>
-        Court Challenges: ${val1}<br>
-        Bill Status: ${val2}<br>
+        Bill Status: ${val1}<br>
+        Court Challenges: ${val2}<br>
+        Scale: ${val3}<br>
         <button onclick="hidePopup()">Close</button>
     ` : `
         <strong>EO ${eo} Scale Factors</strong><br>
@@ -60,6 +62,18 @@ function showPopup(type, eo, val1, val2) {
 function hidePopup() {
     const popup = document.getElementById("popup");
     if (popup) popup.style.display = "none";
+}
+
+function toggleHighRisk() {
+    const container = document.getElementById("swipe-container");
+    const button = document.getElementById("toggle-high-risk");
+    if (container.style.display === "none") {
+        container.style.display = "block";
+        button.textContent = "Hide";
+    } else {
+        container.style.display = "none";
+        button.textContent = "Show";
+    }
 }
 
 let sortDirection = [1, 1, 1, 1, 1, -1, 1, 1]; // Risk (col 5) defaults descending
