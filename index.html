@@ -4,23 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EOTracker.net</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>EOTracker.net</h1>
+    <header>
+        <h1>Presidential Executive Orders - 2025</h1>
+        <p>Tracking EOs by Risk and Scale</p>
+    </header>
     
-    <!-- Staffer EO Table -->
     <section id="staffer-table">
-        <h2>Staffer Red List</h2>
+        <h2>High-Risk EOs</h2>
         <div id="swipe-container"></div>
-        <a href="#full-table">See Full List</a>
+        <a href="#full-table">See All EOs</a>
     </section>
 
-    <!-- Full EO Table -->
     <section id="full-table">
-        <h2>Full EO List</h2>
-        <div>
+        <h2>All EOs</h2>
+        <div class="filters">
             <label>Risk Level: </label>
             <select id="urgency-filter">
                 <option value="">All</option>
@@ -53,19 +54,29 @@
         <table id="eo-table">
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">EO #</th>
-                    <th onclick="sortTable(1)">Title</th>
+                    <th onclick="sortTable(0)">EO # <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(1)">Title <span class="sort-arrow">▲<br>▼</span></th>
                     <th>Summary</th>
                     <th>Bill Status</th>
                     <th>Court Challenges</th>
-                    <th onclick="sortTable(5)">Risk Level</th>
-                    <th onclick="sortTable(6)">Scale</th>
-                    <th onclick="sortTable(7)">Last Updated</th>
+                    <th onclick="sortTable(5)">Risk Level <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(6)">Scale <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(7)">Last Updated <span class="sort-arrow">▲<br>▼</span></th>
                 </tr>
             </thead>
             <tbody id="eo-body"></tbody>
         </table>
     </section>
+
+    <footer>
+        <h3>Data Sources & Definitions</h3>
+        <p><strong>Bill Status:</strong> Congress.gov (sponsored bills), X.com (intent).</p>
+        <p><strong>Court Challenges:</strong> X.com (lawsuits, rulings).</p>
+        <p><strong>Risk Level (1-10):</strong> Legislative Risk (0-4: Codified, Sponsored, Optional, Intent, No bill), Judicial Risk (0-3: None, Threatened, Filed, Ruling), Scale Weight (0-3: Low=0, Medium=1, High=2-3). Red: 8-10.</p>
+        <p><strong>Scale (H/M/L):</strong> Population (>1M=High, 100K-1M=Medium, <100K=Low), Economic (>$10B=High, $1B-$10B=Medium, <$1B=Low), Longevity (>10 yrs=High, 2-10 yrs=Medium, <2 yrs=Low).</p>
+        <p><em>This site reflects our analysis based on public data. It is not legal or policy advice. Verify details independently and form your own conclusions.</em></p>
+        <p><strong>Corrections or Suggestions?</strong> Email <a href="mailto:EOTracker@proton.me">EOTracker@proton.me</a>.</p>
+    </footer>
 
     <script src="data.js"></script>
     <script src="script.js"></script>
