@@ -1,45 +1,100 @@
-body { font-family: 'Roboto', Arial, sans-serif; margin: 20px; background: #f5f5f5; }
-h1 { text-align: center; color: #333; }
-h2 { color: #555; }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff; }
+body { 
+    font-family: 'Roboto', Arial, sans-serif; 
+    margin: 0; 
+    padding: 20px; 
+    background: #f5f5f5; 
+    color: #333; 
+}
+header { text-align: center; margin-bottom: 20px; }
+h1 { font-size: 32px; color: #444; margin: 0; }
+header p { font-size: 18px; color: #666; margin: 5px 0 0; }
+h2 { font-size: 24px; color: #444; margin-top: 20px; }
+h3 { font-size: 20px; color: #444; margin-top: 30px; }
+a { color: #0066cc; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Sections */
+section { margin-bottom: 30px; }
+
+/* Filters */
+.filters { margin-bottom: 15px; }
+.filters label { margin-right: 5px; font-weight: 700; }
+select { padding: 6px; margin: 5px 10px 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+button { 
+    padding: 8px 16px; 
+    background: #444; 
+    color: #fff; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+button:hover { background: #666; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-th { background: #333; color: #fff; cursor: pointer; }
+th { background: #444; color: #fff; cursor: pointer; position: relative; font-size: 14px; }
+td { font-size: 16px; }
+tbody tr:nth-child(even) { background: #f9f9f9; }
+tbody tr:hover { background: #eee; cursor: pointer; }
 .red { background: #ff4444; color: #fff; }
-select, button { padding: 5px; margin: 5px 0; }
+.sort-arrow { 
+    display: block; 
+    font-size: 10px; 
+    line-height: 1; 
+    color: #ccc; 
+    margin-left: 2px; 
+}
+th:hover .sort-arrow { color: #fff; }
 
 /* Staffer Swipe */
-#swipe-container { overflow-x: auto; white-space: nowrap; margin-top: 10px; }
-.card { display: inline-block; width: 250px; border: 1px solid #ddd; padding: 12px; margin-right: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+#swipe-container { 
+    overflow-x: auto; 
+    white-space: nowrap; 
+    margin-top: 10px; 
+    padding-bottom: 10px; 
+}
+.card { 
+    display: inline-block; 
+    width: 260px; 
+    border: 1px solid #ddd; 
+    padding: 15px; 
+    margin-right: 10px; 
+    background: #fff; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+    font-size: 14px; 
+}
+.card strong { font-size: 16px; font-weight: 700; }
+
+/* Footer */
+footer { font-size: 14px; color: #666; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
+footer p { margin: 5px 0; }
+footer em { font-style: italic; }
 
 /* Popup */
-#popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    z-index: 1000;
-    display: none;
-    border-radius: 5px;
+#popup { 
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    background: #fff; 
+    border: 1px solid #ddd; 
+    padding: 20px; 
+    box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+    z-index: 1000; 
+    display: none; 
+    border-radius: 5px; 
+    animation: fadeIn 0.2s; 
 }
-#popup button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background: #333;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-#popup button:hover { background: #555; }
+#popup button { margin-top: 15px; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* Mobile */
 @media (max-width: 600px) {
-    #full-table { display: block; } /* Show Full Table below Staffer */
+    #full-table { display: block; }
     #staffer-table { display: block; }
-    select { display: block; width: 100%; }
-    #reset-filters { display: block; width: 100%; }
-    table { font-size: 14px; } /* Shrink text for readability */
+    .filters { text-align: center; }
+    select, button { display: block; width: 100%; margin: 5px 0; }
+    table { font-size: 14px; }
 }

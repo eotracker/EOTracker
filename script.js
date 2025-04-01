@@ -1,7 +1,7 @@
-// Full Table
 function loadFullTable() {
     const tbody = document.getElementById("eo-body");
-    eos.forEach(eo => {
+    const sortedEos = eos.slice().sort((a, b) => b.urgency - a.urgency);
+    sortedEos.forEach(eo => {
         const scaleFactors = `Pop: ${eo.impact === "High" ? ">1M" : eo.impact === "Medium" ? "100K-1M" : "<100K"}, Econ: ${eo.impact === "High" ? ">$10B" : eo.impact === "Medium" ? "$1B-$10B" : "<$1B"}, Long: ${eo.impact === "High" ? ">10 yrs" : eo.impact === "Medium" ? "2-10 yrs" : "<2 yrs"}`;
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -18,7 +18,6 @@ function loadFullTable() {
     });
 }
 
-// Staffer Swipe
 function loadStafferTable() {
     const container = document.getElementById("swipe-container");
     const redEos = eos.filter(eo => eo.urgency >= 8)
@@ -38,7 +37,6 @@ function loadStafferTable() {
     });
 }
 
-// Popup
 function showPopup(type, eo, val1, val2) {
     let popup = document.getElementById("popup");
     if (!popup) {
@@ -64,8 +62,7 @@ function hidePopup() {
     if (popup) popup.style.display = "none";
 }
 
-// Sort
-let sortDirection = [1, 1, 1, 1, 1, 1, 1, 1];
+let sortDirection = [1, 1, 1, 1, 1, -1, 1, 1]; // Risk (col 5) defaults descending
 
 function sortTable(col) {
     const tbody = document.getElementById("eo-body");
@@ -89,10 +86,11 @@ function sortTable(col) {
     });
     
     sortDirection[col] = -sortDirection[col];
+    const arrow = sortDirection[col] === 1 ? '▲<br>▼' : '▼<br>▲';
+    document.querySelectorAll('th')[col].querySelector('.sort-arrow').innerHTML = arrow;
     rows.forEach(row => tbody.appendChild(row));
 }
 
-// Filter
 function applyFilters() {
     const urgencyFilter = document.getElementById("urgency-filter").value;
     const impactFilter = document.getElementById("impact-filter").value;
@@ -121,7 +119,6 @@ function applyFilters() {
     });
 }
 
-// Reset Filters
 function resetFilters() {
     document.getElementById("urgency-filter").value = "";
     document.getElementById("impact-filter").value = "";
@@ -130,14 +127,12 @@ function resetFilters() {
     applyFilters();
 }
 
-// Bind filters and reset
 document.getElementById("urgency-filter").addEventListener("change", applyFilters);
 document.getElementById("impact-filter").addEventListener("change", applyFilters);
 document.getElementById("legislative-filter").addEventListener("change", applyFilters);
 document.getElementById("judicial-filter").addEventListener("change", applyFilters);
 document.getElementById("reset-filters").addEventListener("click", resetFilters);
 
-// Load
 loadFullTable();
 loadStafferTable();
 applyFilters();
