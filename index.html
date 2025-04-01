@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EOTracker.net</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>EOTracker.net</h1>
+    
+    <!-- Staffer EO Table -->
+    <section id="staffer-table">
+        <h2>Staffer Red List</h2>
+        <div id="swipe-container"></div>
+        <a href="#full-table">See Full List</a>
+    </section>
+
+    <!-- Full EO Table -->
+    <section id="full-table">
+        <h2>Full EO List</h2>
+        <div>
+            <label>Risk Level: </label>
+            <select id="urgency-filter">
+                <option value="">All</option>
+                <option value="red">Red (8-10)</option>
+                <option value="yellow">Yellow (5-7)</option>
+                <option value="green">Green (1-4)</option>
+            </select>
+            <label>Scale: </label>
+            <select id="impact-filter">
+                <option value="">All</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            <label>Bill Status: </label>
+            <select id="legislative-filter">
+                <option value="">All</option>
+                <option value="No bill yet">No bill yet</option>
+                <option value="sponsored">Sponsored</option>
+                <option value="optional">Optional</option>
+            </select>
+            <label>Court Challenges: </label>
+            <select id="judicial-filter">
+                <option value="">All</option>
+                <option value="lawsuit">Lawsuit</option>
+                <option value="none">None</option>
+            </select>
+            <button id="reset-filters">Reset Filters</button>
+        </div>
+        <table id="eo-table">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">EO #</th>
+                    <th onclick="sortTable(1)">Title</th>
+                    <th>Summary</th>
+                    <th>Bill Status</th>
+                    <th>Court Challenges</th>
+                    <th onclick="sortTable(5)">Risk Level</th>
+                    <th onclick="sortTable(6)">Scale</th>
+                    <th onclick="sortTable(7)">Last Updated</th>
+                </tr>
+            </thead>
+            <tbody id="eo-body"></tbody>
+        </table>
+    </section>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
