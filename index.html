@@ -3,82 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EOTracker.net</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>47th President’s Executive Orders</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <h1>47th President’s Executive Orders</h1>
-        <p>Tracking EOs by Risk and Impact</p>
+        <p>Tracking Trump 2025 EOs—Updated as of April 03, 2025</p>
     </header>
-    
-    <section id="staffer-table">
-        <h2>High-Risk EOs <button id="toggle-high-risk" onclick="toggleHighRisk()">Hide</button></h2>
+    <section id="high-risk-eos">
+        <h2>High-Risk EOs (Risk Level ≥ 8)</h2>
+        <button id="toggle-high-risk" onclick="toggleHighRisk()">Hide</button>
         <div id="swipe-container"></div>
-        <a href="#full-table">See All EOs</a>
     </section>
-
     <section id="full-table">
-        <h2>All EOs</h2>
+        <h2>Full EO Table</h2>
+        <p><a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025" target="_blank">Click here for the Federal Register’s complete list of 2025 Executive Orders</a></p>
         <div class="filters">
-            <label>Risk Level: </label>
+            <label>Risk Level:</label>
             <select id="urgency-filter">
                 <option value="">All</option>
                 <option value="red">Red (8-10)</option>
                 <option value="yellow">Yellow (5-7)</option>
                 <option value="green">Green (1-4)</option>
             </select>
-            <label>Impact Level: </label>
+            <label>Impact Level:</label>
             <select id="impact-filter">
                 <option value="">All</option>
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
             </select>
-            <label>Bill Status: </label>
+            <label>Bill Status:</label>
             <select id="legislative-filter">
                 <option value="">All</option>
-                <option value="No bill yet">No bill yet</option>
+                <option value="no bill yet">No Bill Yet</option>
                 <option value="sponsored">Sponsored</option>
                 <option value="optional">Optional</option>
             </select>
-            <label>Court Challenges: </label>
+            <label>Court Challenges:</label>
             <select id="judicial-filter">
                 <option value="">All</option>
                 <option value="lawsuit">Lawsuit</option>
                 <option value="none">None</option>
             </select>
-            <button id="reset-filters">Reset Filters</button>
+            <button id="reset-filters">Reset</button>
         </div>
         <table id="eo-table">
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)">EO # <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(0)">EO Number <span class="sort-arrow">▲<br>▼</span></th>
                     <th onclick="sortTable(1)">Title <span class="sort-arrow">▲<br>▼</span></th>
-                    <th>Summary</th>
-                    <th>Bill Status</th>
-                    <th>Court Challenges</th>
-                    <th onclick="sortTable(5)">Risk Level <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(2)">Summary <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(3)">Bill Status <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(4)">Court Challenges <span class="sort-arrow">▲<br>▼</span></th>
+                    <th onclick="sortTable(5)">Risk Level <span class="sort-arrow">▼<br>▲</span></th>
                     <th onclick="sortTable(6)">Impact Level <span class="sort-arrow">▲<br>▼</span></th>
                     <th onclick="sortTable(7)">Last Updated <span class="sort-arrow">▲<br>▼</span></th>
-                    <th onclick="sortTable(8)">Date Signed <span class="sort-arrow">▲<br>▼</span></th>
                 </tr>
             </thead>
             <tbody id="eo-body"></tbody>
         </table>
     </section>
-
     <footer>
-        <h3>Data Sources & Definitions</h3>
-        <p><strong>Bill Status:</strong> Congress.gov (sponsored bills), X.com (intent).</p>
-        <p><strong>Court Challenges:</strong> X.com (lawsuits, rulings).</p>
-        <p><strong>Risk Level (1-10):</strong> Legislative Risk (0-4: Codified, Sponsored, Optional, Intent, No bill), Judicial Risk (0-3: None, Threatened, Filed, Ruling), Impact Weight (0-3: Low=0, Medium=1, High=2-3). Red: 8-10.</p>
-        <p><strong>Impact Level (H/M/L):</strong> Population (>1M=High, 100K-1M=Medium, <100K=Low), Economic (>$10B=High, $1B-$10B=Medium, <$1B=Low), Longevity (>10 yrs=High, 2-10 yrs=Medium, <2 yrs=Low).</p>
-        <p><em>This site reflects our analysis based on public data. It is not legal or policy advice. Verify details independently and form your own conclusions.</em></p>
-        <p><strong>Corrections or Suggestions?</strong> Email <a href="mailto:EOTracker@proton.me">EOTracker@proton.me</a>.</p>
+        <p><strong>Sources and Methodology:</strong></p>
+        <p><strong>Bill Status:</strong> <em>Sourced from Congress.gov for sponsored bills; search of X.com for legislative intent.</em></p>
+        <p><strong>Court Challenges:</strong> <em>Search of X.com for lawsuits and rulings.</em></p>
+        <p><strong>Risk Level:</strong> <em>Score based on sum of 3 factors (Green=0-4, Yellow=5-7, <span class="red">Red=8-10</span>):</em></p>
+        <p>1. Bill Status (0=Codified, 1=Sponsored, 2=Optional (within executive power however legislation will increase durability), 3=Intent declared, 4=No bill yet)</p>
+        <p>2. Court Challenges (0=None, 1=Threatened, 2=Lawsuit filed, 3=Negative ruling)</p>
+        <p>3. Impact Level (0=Low, 1=Medium, 2 or 3=High)</p>
+        <p><strong>Impact Level:</strong> <em>Assessment based on 3 factors; (0=Low=3 factors are Low; 1=Medium=1 factor Medium; 2=High=2 factors Medium, 3=High=1 or more factors High):</em></p>
+        <p>1. Population Impact (Low=<100k, Medium=100k-1M, High=>1M)</p>
+        <p>2. Economic Impact (Low=Less than $1B, Medium=$1B-$10B, High=Greater than $10B)</p>
+        <p>3. Longevity of EO Impact (Low=<2 years, Medium=2-10 years, High=>10 years)</p>
+        <p><em>Data sourced from public records; Risk and Impact ratings are subjective and may evolve. Court challenges reflect known filings or threats as of the last update. Contact: <a href="mailto:eotracker@proton.me">eotracker@proton.me</a></em></p>
     </footer>
-
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>

@@ -82,8 +82,9 @@ th:hover .sort-arrow { color: #fff; }
 
 /* Footer */
 footer { font-size: 14px; color: #666; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
-footer p { margin: 5px 0; }
+footer p { margin: 10px 0; } /* Updated from 5px */
 footer em { font-style: italic; }
+footer .red { background: none; color: red; } /* Override for footer text */
 
 /* Popup */
 #popup { 
@@ -101,6 +102,23 @@ footer em { font-style: italic; }
     animation: fadeIn 0.2s; 
 }
 #popup button { margin-top: 15px; }
+
+/* Hover Popup */
+#hover {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: none;
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 300px;
+    animation: fadeIn 0.2s;
+}
+
+/* Animation */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* Mobile */
@@ -110,4 +128,12 @@ footer em { font-style: italic; }
     .filters { text-align: center; }
     select, button { display: block; width: 100%; margin: 5px 0; }
     table { font-size: 14px; }
+}
+
+footer p:not(:first-child) {
+    margin-left: 20px;
+}
+footer p:nth-child(5), footer p:nth-child(6), footer p:nth-child(7), 
+footer p:nth-child(9), footer p:nth-child(10), footer p:nth-child(11) {
+    margin-left: 40px;
 }

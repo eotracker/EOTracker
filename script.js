@@ -1,27 +1,18 @@
 function loadFullTable() {
     const tbody = document.getElementById("eo-body");
     const sortedEos = eos.slice().sort((a, b) => b.urgency - a.urgency);
-    const eoLinks = {
-        "14147": "https://www.federalregister.gov/documents/2025/01/28/2025-01863/initial-rescissions-of-harmful-executive-orders-and-actions",
-        "14148": "https://www.federalregister.gov/documents/2025/01/28/2025-01864/protecting-the-american-people-against-invasion",
-        "14149": "https://www.federalregister.gov/documents/2025/01/28/2025-01865/restoring-freedom-of-speech-and-ending-federal-censorship",
-        "14150": "https://www.federalregister.gov/documents/2025/01/28/2025-01866/declaring-a-national-energy-emergency",
-        "14151": "https://www.federalregister.gov/documents/2025/01/29/2025-01907/establishing-the-dept-of-government-efficiency",
-        "14152": "https://www.federalregister.gov/documents/2025/01/28/2025-01867/reinstating-the-1776-commission",
-        "14153": "https://www.federalregister.gov/documents/2025/01/28/2025-01868/protecting-american-jobs-against-foreign-adversaries",
-        "14154": "https://www.federalregister.gov/documents/2025/01/28/2025-01869/ending-federal-overreach-in-education",
-        "14155": "https://www.federalregister.gov/documents/2025/01/28/2025-01870/securing-american-elections",
-        "14156": "https://www.federalregister.gov/documents/2025/01/28/2025-01871/enhancing-national-defense-through-military-modernization",
-        "14157": "https://www.federalregister.gov/documents/2025/01/29/2025-01908/promoting-american-manufacturing",
-        "14158": "https://www.federalregister.gov/documents/2025/01/29/2025-01909/terminating-federal-funding-for-sanctuary-cities",
-        "14159": "https://www.federalregister.gov/documents/2025/01/29/2025-01910/reforming-federal-permitting-for-infrastructure",
-        "14160": "https://www.federalregister.gov/documents/2025/03/18/2025-05678/banning-transgender-individuals-from-military-service",
-        "14161": "https://www.federalregister.gov/documents/2025/01/29/2025-01911/eliminating-critical-race-theory-from-federal-training",
-        "14162": "https://www.federalregister.gov/documents/2025/02/11/2025-02890/strengthening-border-wall-construction",
-        "14163": "https://www.federalregister.gov/documents/2025/02/18/2025-03245/expanding-tariffs-on-chinese-imports",
-        "14164": "https://www.federalregister.gov/documents/2025/02/25/2025-03789/deregulating-federal-healthcare-programs",
-        "14165": "https://www.federalregister.gov/documents/2025/03/04/2025-04321/prohibiting-federal-funds-for-abortion-services",
-        "14166": "https://www.federalregister.gov/documents/2025/03/04/2025-04322/restoring-law-enforcement-funding"
+    const billLinks = {
+        "14155": "https://www.congress.gov/bill/119th-congress/house-bill/22"
+    };
+    const courtLinks = {
+        "14148": "https://x.com/search?q=ACLU%20lawsuit%20EO%2014148",
+        "14151": "https://x.com/search?q=unions%20lawsuit%20EO%2014151",
+        "14155": "https://x.com/search?q=NAACP%20lawsuit%20EO%2014155",
+        "14158": "https://x.com/search?q=California%20lawsuit%20EO%2014158",
+        "14160": "https://x.com/search?q=ACLU%20lawsuit%20EO%2014160",
+        "14162": "https://x.com/search?q=Tribal%20Nations%20lawsuit%20EO%2014162",
+        "14164": "https://x.com/search?q=AARP%20lawsuit%20EO%2014164",
+        "14165": "https://x.com/search?q=Planned%20Parenthood%20lawsuit%20EO%2014165"
     };
     sortedEos.forEach(eo => {
         const scaleFactors = `Pop: ${eo.impact === "High" ? ">1M" : eo.impact === "Medium" ? "100K-1M" : "<100K"}, Econ: ${eo.impact === "High" ? ">$10B" : eo.impact === "Medium" ? "$1B-$10B" : "<$1B"}, Long: ${eo.impact === "High" ? ">10 yrs" : eo.impact === "Medium" ? "2-10 yrs" : "<2 yrs"}`;
@@ -30,18 +21,23 @@ function loadFullTable() {
             const parts = billStatus.split(", ");
             billStatus = `${parts[0]}, <b>${parts[1]}</b>`;
         }
-        const eoLink = eoLinks[eo.eo] || "https://www.federalregister.gov";
+        const billLink = billLinks[eo.eo] ? `<a href="${billLinks[eo.eo]}" target="_blank">${billStatus}</a>` : billStatus;
+        const courtLink = courtLinks[eo.eo] ? `<a href="${courtLinks[eo.eo]}" target="_blank">${eo.judicial}</a>` : eo.judicial;
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${eo.eo}</td>
-            <td><a href="${eoLink}">${eo.title}</a></td>
+            <td>${eo.title}</td>
             <td>${eo.summary}</td>
-            <td>${billStatus}</td>
-            <td>${eo.judicial}</td>
-            <td class="${eo.urgency >= 8 ? 'red' : ''}" title="Risk Factors: ${eo.legislative}, ${eo.judicial}, ${eo.impact}" onclick="showPopup('risk', '${eo.eo}', '${eo.legislative}', '${eo.judicial}', '${eo.impact}')">${eo.urgency}</td>
-            <td title="${scaleFactors}" onclick="showPopup('scale', '${eo.eo}', '${scaleFactors}')">${eo.impact}</td>
+            <td>${billLink}</td>
+            <td>${courtLink}</td>
+            <td class="${eo.urgency >= 8 ? 'red' : ''}" 
+                onmouseover="showHover('risk', '${eo.eo}', '${eo.legislative}', '${eo.judicial}', '${eo.impact}', event)" 
+                onmouseout="hideHover()" 
+                onclick="showPopup('risk', '${eo.eo}', '${eo.legislative}', '${eo.judicial}', '${eo.impact}')">${eo.urgency}</td>
+            <td onmouseover="showHover('scale', '${eo.eo}', '${scaleFactors}', '', '', event)" 
+                onmouseout="hideHover()" 
+                onclick="showPopup('scale', '${eo.eo}', '${scaleFactors}')">${eo.impact}</td>
             <td>${eo.last_updated}</td>
-            <td>${eo.date_signed}</td>
         `;
         tbody.appendChild(row);
     });
@@ -73,7 +69,6 @@ function showPopup(type, eo, val1, val2, val3) {
         popup.id = "popup";
         document.body.appendChild(popup);
     }
-    console.log("Risk Popup Args:", { eo, val1, val2, val3 });
     popup.innerHTML = type === "risk" ? `
         <strong>EO ${eo} Risk Factors</strong><br>
         Bill Status: ${val1}<br>
@@ -93,6 +88,32 @@ function hidePopup() {
     if (popup) popup.style.display = "none";
 }
 
+function showHover(type, eo, val1, val2, val3, event) {
+    let hover = document.getElementById("hover");
+    if (!hover) {
+        hover = document.createElement("div");
+        hover.id = "hover";
+        document.body.appendChild(hover);
+    }
+    hover.innerHTML = type === "risk" ? `
+        <strong>EO ${eo} Risk Factors</strong><br>
+        Bill Status: ${val1}<br>
+        Court Challenges: ${val2}<br>
+        Impact Level: ${val3}
+    ` : `
+        <strong>EO ${eo} Impact Factors</strong><br>
+        ${val1}
+    `;
+    hover.style.display = "block";
+    hover.style.left = `${event.pageX + 10}px`;
+    hover.style.top = `${event.pageY + 10}px`;
+}
+
+function hideHover() {
+    const hover = document.getElementById("hover");
+    if (hover) hover.style.display = "none";
+}
+
 function toggleHighRisk() {
     const container = document.getElementById("swipe-container");
     const button = document.getElementById("toggle-high-risk");
@@ -105,7 +126,7 @@ function toggleHighRisk() {
     }
 }
 
-let sortDirection = [1, 1, 1, 1, 1, -1, 1, 1, 1]; // Risk (col 5) defaults descending
+let sortDirection = [1, 1, 1, 1, 1, -1, 1, 1];
 
 function sortTable(col) {
     const tbody = document.getElementById("eo-body");
@@ -170,12 +191,14 @@ function resetFilters() {
     applyFilters();
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+    loadFullTable();
+    loadStafferTable();
+    applyFilters();
+});
+
 document.getElementById("urgency-filter").addEventListener("change", applyFilters);
 document.getElementById("impact-filter").addEventListener("change", applyFilters);
 document.getElementById("legislative-filter").addEventListener("change", applyFilters);
 document.getElementById("judicial-filter").addEventListener("change", applyFilters);
 document.getElementById("reset-filters").addEventListener("click", resetFilters);
-
-loadFullTable();
-loadStafferTable();
-applyFilters();
