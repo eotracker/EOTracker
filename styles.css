@@ -47,25 +47,55 @@ tbody tr:hover { background: #eee; cursor: pointer; }
 }
 th:hover .sort-arrow { color: #fff; }
 
-/* Staffer Swipe */
+/* High-Risk EOs Swipe */
 #swipe-container { 
-    overflow-x: auto; 
-    margin-top: 10px; 
-    padding-bottom: 10px; 
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 1080px;
+    max-width: 1080px;
+    margin-top: 10px;
+    padding: 0 10px 10px 10px;
+    gap: 5px;
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+}
+#swipe-container::-webkit-scrollbar {
+    height: 8px;
+}
+#swipe-container::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+}
+#swipe-container::-webkit-scrollbar-track {
+    background: #ddd;
 }
 .card { 
-    display: inline-block; 
-    width: 260px; 
-    border: 1px solid #ddd; 
-    padding: 15px; 
-    margin-right: 10px; 
-    background: #fff; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-    font-size: 14px; 
-    white-space: normal; 
+    display: inline-flex;
+    flex-direction: column;
+    flex: 0 0 260px;
+    min-width: 0;
+    height: 160px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-right: 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 14px;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.card strong { font-size: 16px; font-weight: 700; }
+.card strong { 
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.card p {
+    margin: 2px 0;
+}
 
 /* Toggle Button */
 #toggle-high-risk {
@@ -82,9 +112,9 @@ th:hover .sort-arrow { color: #fff; }
 
 /* Footer */
 footer { font-size: 14px; color: #666; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; }
-footer p { margin: 10px 0; } /* Updated from 5px */
+footer p { margin: 10px 0; }
 footer em { font-style: italic; }
-footer .red { background: none; color: red; } /* Override for footer text */
+footer .red { background: none; color: red; }
 
 /* Popup */
 #popup { 
@@ -124,10 +154,17 @@ footer .red { background: none; color: red; } /* Override for footer text */
 /* Mobile */
 @media (max-width: 600px) {
     #full-table { display: block; }
-    #staffer-table { display: block; }
     .filters { text-align: center; }
     select, button { display: block; width: 100%; margin: 5px 0; }
     table { font-size: 14px; }
+    #swipe-container { 
+        width: 620px;
+        max-width: 620px;
+    }
+    .card { 
+        flex: 0 0 200px;
+        height: 140px;
+    }
 }
 
 footer p:not(:first-child) {

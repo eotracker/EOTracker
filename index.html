@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>47th President’s Executive Orders</h1>
-        <p>Tracking Trump 2025 EOs—Updated as of April 03, 2025</p>
+        <p id="update-date">Tracking Trump 2025 EOs—Updated as of [Loading...]</p>
     </header>
     <section id="high-risk-eos">
         <h2>High-Risk EOs (Risk Level ≥ 8)</h2>
@@ -21,7 +21,7 @@
         <p><a href="https://www.federalregister.gov/presidential-documents/executive-orders/donald-trump/2025" target="_blank">Click here for the Federal Register’s complete list of 2025 Executive Orders</a></p>
         <div class="filters">
             <label>Risk Level:</label>
-            <select id="urgency-filter">
+            <select id="risk-filter">
                 <option value="">All</option>
                 <option value="red">Red (8-10)</option>
                 <option value="yellow">Yellow (5-7)</option>
@@ -35,14 +35,14 @@
                 <option value="Low">Low</option>
             </select>
             <label>Bill Status:</label>
-            <select id="legislative-filter">
+            <select id="bill-filter">
                 <option value="">All</option>
                 <option value="no bill yet">No Bill Yet</option>
                 <option value="sponsored">Sponsored</option>
                 <option value="optional">Optional</option>
             </select>
             <label>Court Challenges:</label>
-            <select id="judicial-filter">
+            <select id="court-filter">
                 <option value="">All</option>
                 <option value="lawsuit">Lawsuit</option>
                 <option value="none">None</option>
