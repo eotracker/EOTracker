@@ -2,7 +2,7 @@ function loadFullTable() {
     const tbody = document.getElementById("eo-body");
     const sortedEos = eos.slice().sort((a, b) => b.risk_level - a.risk_level);
     sortedEos.forEach(eo => {
-        const impactFactors = `Pop: ${eo.impact_level === "High" ? ">1M" : eo.impact_level === "Medium" ? "100K-1M" : "<100K"}, Econ: ${eo.impact_level === "High" ? ">$10B" : eo.impact_level === "Medium" ? "$1B-$10B" : "<$1B"}, Long: ${eo.impact_level === "High" ? ">10 yrs" : eo.impact_level === "Medium" ? "2-10 yrs" : "<2 yrs"}`;
+        const impactFactors = `Pop: ${eo.impact_level === "High" ? ">500K" : eo.impact_level === "Medium" ? "10K-500K" : "<10K"}, Econ: ${eo.impact_level === "High" ? ">$5B" : eo.impact_level === "Medium" ? "$100M-$5B" : "<$100M"}, Long: ${eo.impact_level === "High" ? ">5 yrs" : eo.impact_level === "Medium" ? "1-5 yrs" : "<1 yr"}`;
         let billStatus = eo.bill_status;
         if (billStatus.includes("HR") || billStatus.includes("S.")) {
             const parts = billStatus.split(", ");
